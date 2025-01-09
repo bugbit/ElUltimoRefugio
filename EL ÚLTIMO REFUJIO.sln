@@ -1,20 +1,27 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{E1B050E5-90EC-15B7-B7C7-0C5EFFE8054D}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E1B050E5-90EC-15B7-B7C7-0C5EFFE8054D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1B050E5-90EC-15B7-B7C7-0C5EFFE8054D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1B050E5-90EC-15B7-B7C7-0C5EFFE8054D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1B050E5-90EC-15B7-B7C7-0C5EFFE8054D}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-EndGlobal
+using UnityEngine;
+
+public class Movimiento : MonoBehaviour
+{
+    private Rigidbody2D rb;
+    public float velocidad;
+    private Vector2 inputSistema;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        float movimientoX = Input.GetAxis("Horizontal");
+        float movimientoY = Input.GetAxis("Vertical");
+        inputSistema = new Vector2(movimientoX, movimientoY).normalized;
+    }
+
+    private void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + inputSistema * velocidad * Time.fixedDeltaTime);
+    }
+}
