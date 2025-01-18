@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class controlador : MonoBehaviour
+public class personagecontrolador : MonoBehaviour
 {
-    public float velocidad;
     private Rigidbody2D rb;
-    private Vector2 inputSistema;
+    public float velocidadmovimiento;
+    private Vector2 inputMovimiento;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,12 +15,14 @@ public class controlador : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        procesarMovimiento();
+    }
+    void procesarMovimiento()
+    {
         float movex = Input.GetAxis("Horizontal");
         float movey = Input.GetAxis("Vertical");
-        inputSistema = new Vector2(movex, movey);
-    }
-    private void FixedUpdate()
-    {
-        rb.position = (rb.position + inputSistema * velocidad * Time.deltaTime);
+        inputMovimiento = new Vector2(movex, movey).normalized;
+
+        rb.position = (rb.position + inputMovimiento * velocidadmovimiento * Time.deltaTime);
     }
 }
